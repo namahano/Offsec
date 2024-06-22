@@ -91,47 +91,45 @@ niktoでスキャンしてみる
 
 適当に`admin:admin`でログインできるどうか試すとログインに成功した
 
-![](Pasted%20image%2020240622082016.png)
+![](screenshot/Pasted%20image%2020240622082016.png)
 
-googleでSubrion 4.2.1のRCEがないか調べると以下のPoCを見つけた
-[CVE-2018-19422-SubrionCMS-RCE](https://github.com/hev0x/CVE-2018-19422-SubrionCMS-RCE.git)
+googleでSubrion 4.2.1のRCEがないか調べると以下のPoCを見つけた<br>[CVE-2018-19422-SubrionCMS-RCE](https://github.com/hev0x/CVE-2018-19422-SubrionCMS-RCE.git)
 # Exploit
 
 READMEの通り、ターゲットURLと`admin:admin`の認証情報を使用して実行する
 
-![[/screenshot/Pasted image 20240622084510.png]]
+![](screenshot/Pasted%20image%2020240622084510.png)
 
 www-dataとしてRCEを実行できるようになった
 
-![[screenshot/Pasted image 20240622130240.png]]
+![](screenshot/Pasted%20image%2020240622130240.png)
 
 local.txtゲット
 しかし、このシェルは実際のシェルではないため実際のシェルに接続する必要がある。
 
-![[screenshot/Pasted image 20240622142554.png]]
+![](screenshot/Pasted%20image%2020240622142554.png)
 
 pythonのリバースシェル使用する
 
-![[Pasted image 20240622142618.png]]
+![](screenshot/Pasted%20image%2020240622142618.png)
 
-これで本物のシェルお奪うことができた
+これで本物のシェルを奪うことができた
 # # Privilege Escalation
 
 Linpeasをダウンロードし実行した
 
-![[screenshot/Pasted image 20240622151622.png]]
+![](screenshot/Pasted%20image%2020240622151622.png)
 
 ## SetSUID Pkexec Privilege Escalation
 
 SUIDのついたバイナリをしらべる
 
-![[screenshot/Pasted image 20240622160555.png]]
+![](screenshot/Pasted%20image%2020240622160555.png)
 
 pkexecにSUIDが付与されていることが分かった
-pkexecにSUIDが付与されている場合以下のPoCを使用することで権限の昇格を行える
-[CVE-2021-4034 - Pkexec Local Privilege Escalation](https://github.com/ly4k/PwnKit)
+pkexecにSUIDが付与されている場合以下のPoCを使用することで権限の昇格を行える<br>[CVE-2021-4034 - Pkexec Local Privilege Escalation](https://github.com/ly4k/PwnKit)
 
-![[screenshot/Pasted image 20240622160227.png]]
+![](screenshot/Pasted%20image%2020240622160227.png)
 
 rootになれた
 
@@ -167,7 +165,7 @@ exiftoolの脆弱性について調べていると以下の記事を見つけた
 
 exiftool version 7.44から12.23にはDjVu ファイル形式のユーザー データの不適切な無力化が原因で、ローカルの攻撃者がシステム上で任意のコードを実行できるらしい
 
-![[screenshot/Pasted image 20240622161258.png]]
+![](screenshot/Pasted%20image%2020240622161258.png)
 
 インストールされているexiftoolのバージョンから`11.88`なので子の脆弱性を悪用することで権限の昇格が行えそう
 
@@ -176,27 +174,27 @@ exiftool version 7.44から12.23にはDjVu ファイル形式のユーザー デ
 
 以下の内容の`exploit.sh`と`paylaod`ファイルを作成する
 
-![[screenshot/Pasted image 20240622162116.png]]
+![](screenshot/Pasted%20image%2020240622162116.png)
 
 以下のコマンドを実行しdjvuファイルを作成
 
-![[screenshot/Pasted image 20240622162245.png]]
+![](screenshot/Pasted%20image%2020240622162245.png)
 
 作成したdjvuファイルをjpgに変更
 
-![[Pasted image 20240622162327.png]]
+![](screenshot/Pasted%20image%2020240622162327.png)
 
 攻撃者側でWebサーバとシェルの待ち受けを起動しターゲットマシンから`exploit.jpg`をダウンロード
 
-![[screenshot/Pasted image 20240622162450.png]]
+![](screenshot/Pasted%20image%2020240622162450.png)
 
 cranjobが実行されるまで少し待っていると...
 
-![[screenshot/Pasted image 20240622162624.png]]
+![](screenshot/Pasted%20image%2020240622162624.png)
 
 rootのシェルを奪えた
 
-![[screenshot/Pasted image 20240622162734.png]]
+![](screenshot/Pasted%20image%2020240622162734.png)
 
 rootフラグもゲット
 
@@ -206,20 +204,22 @@ metasploitに同じようなモジュール`exploit/unix/fileformat/exiftool_djv
 
 モジュールを選択肢LHOSTを設定
 
-![[screenshot/Pasted image 20240622163637.png]]
+![](screenshot/Pasted%20image%2020240622163637.png)
 
 exploitを実行し`msf.jpg`を作成(msf.jpgは~/.msf4/local/に作成される)
 
-![[screenshot/Pasted image 20240622163807.png]]
+![](screenshot/Pasted%20image%2020240622163807.png)
 
 multi/handlerで待ち受ける
 
-![[screenshot/Pasted image 20240622163941.png]]
+![](screenshot/Pasted%20image%2020240622163941.png)
 
 ターゲットマシンに`msf.jpg`をアップロードしリスナーを起動させる
 
-![[screenshot/Pasted image 20240622164126.png]]
+![](screenshot/Pasted%20image%2020240622164126.png)
 
 セッションが確立されrootのシェルに接続が成功した
 
-![[screenshot/Pasted image 20240622164209.png]]
+![](screenshot/Pasted%20image%2020240622164209.png)
+
+攻略完了
