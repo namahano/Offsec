@@ -139,7 +139,7 @@ crontabに`bash /opt/image-exif.sh`というシェルスクリプトが定期的
 
 スクリプトを見てみる
 
-```
+```bash
 #! /bin/bash
 #07/06/18 A BASH script to collect EXIF metadata 
 
