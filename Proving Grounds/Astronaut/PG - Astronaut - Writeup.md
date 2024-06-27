@@ -76,8 +76,44 @@ GravCMSの初期画面が出てきた<br>GravCMSはMarkDown形式のWebサイト
 
 ディレクトリの探索をしてみる
 
-![](2024-06-21_203507.png)
+![](screenshot/2024-06-21_203507.png)
 
 adminページが見つかったのでアクセスする
 
-![](2024-06-21_203632.png)
+![](screenshot/2024-06-21_203632.png)
+
+# Exploit
+
+デフォルトパスワードが使えないか探したが見つからなかった。<br>PoCがないか調べてみると以下のPoCを見つけた。<br>[CVE-2021-21425](https://github.com/CsEnox/CVE-2021-21425)
+
+リバースシェルを入れて実行してみる
+
+![](screenshot/2024-06-27%20141959.png)
+
+シェルが返ってきた
+
+![](screenshot/2024-06-27%20142213.png)
+
+# Privilege Escalation
+
+## SUID
+
+SUIDが付与されているバイナリを列挙してみる
+
+![](screenshot/2024-06-27_152841.png)
+
+`/usr/bin/php7.4` というバイナリを見つけた<br>
+GTFObinsで調べてみる
+[./php](https://gtfobins.github.io/gtfobins/php/)
+
+![](screenshot/2024-06-27_153140.png)
+
+このコマンドの通りに実行してみる
+
+![](screenshot/2024-06-27_152705.png)
+
+rootになれた
+
+![](screenshot/2024-06-27_153309.png)
+
+rootフラグゲット
