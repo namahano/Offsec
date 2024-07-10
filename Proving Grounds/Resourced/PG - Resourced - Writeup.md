@@ -226,7 +226,7 @@ RBCD攻撃とは、攻撃者がターゲットとなるActive Directoryへ侵入
 
 ![](screenshot/image-20240710193953532.png)
 
-手順４では手順３で新しく作成したマシンに委任権限を管理する方法が必要になるので`rbcd` スクリプトを使用して`msDS-AllowedToActOnBehalfOfOtherIdentity`属性にコンピューターアカウントを登録する
+手順４では手順３で新しく作成したマシンに委任権限を管理する方法が必要になるので`rbcd` スクリプトを使用して<br>`msDS-AllowedToActOnBehalfOfOtherIdentity`属性にコンピューターアカウントを登録する
 
 ![](screenshot/image-20240710194736873.png)
 
